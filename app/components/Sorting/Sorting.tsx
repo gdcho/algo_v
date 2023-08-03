@@ -1,3 +1,5 @@
+// components/Sorting/Sorting.tsx
+"use client";
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sortArray } from '../../redux/actions';
@@ -16,8 +18,7 @@ const sortFunctions = {
     mergeSort,
     quickSort,
     heapSort,
-  };
-  
+};
 
 const Sorting = () => {
   const dispatch = useDispatch();
@@ -25,8 +26,8 @@ const Sorting = () => {
   const sortAlgorithm = useSelector((state: RootState) => state.sort.sortAlgorithm);
 
   useEffect(() => {
-    if (sortAlgorithm) {
-      dispatch(sortArray(sortFunctions[sortAlgorithm](array)));
+    if (typeof window !== 'undefined' && sortAlgorithm) {
+        dispatch(sortArray(sortFunctions[sortAlgorithm](array)));
     }
   }, [sortAlgorithm, array, dispatch]);
 

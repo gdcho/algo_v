@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { selectSortAlgorithm } from '../../redux/actions';
 
 const Toolbar = () => {
   const dispatch = useDispatch();
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(selectSortAlgorithm(event.target.value));
   };
 

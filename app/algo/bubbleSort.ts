@@ -2,7 +2,7 @@
 
 export function bubbleSort(arr: number[]): number[] {
     let n = arr.length;
-    let swapped;
+    let swapped: boolean;
 
     do {
         swapped = false;

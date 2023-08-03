@@ -1,11 +1,18 @@
 // redux/store.ts
-import { createStore, combineReducers } from 'redux';
+
+import { configureStore } from '@reduxjs/toolkit';
 import sortReducer from './reducers/sortReducer';
 
-const rootReducer = combineReducers({
-  sort: sortReducer,
-});
+export const initializeStore = (preloadedState?: any) => {
+  return configureStore({
+    reducer: {
+      sort: sortReducer,
+    },
+    preloadedState,
+  });
+};
 
-export type RootState = ReturnType<typeof rootReducer>
+const store = initializeStore();
 
-export const store = createStore(rootReducer);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

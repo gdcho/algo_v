@@ -6,7 +6,12 @@ const initialState = {
   sortedArray: [],
 };
 
-const sortReducer = (state = initialState, action) => {
+interface Action {
+  type: typeof SELECT_SORT_ALGORITHM | typeof SORT_ARRAY;
+  payload: any;  
+}
+
+const sortReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case SELECT_SORT_ALGORITHM:
       return {

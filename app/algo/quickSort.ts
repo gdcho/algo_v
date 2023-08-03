@@ -1,7 +1,7 @@
 // algo/quickSort.ts
 
 export function quickSort(arr: number[], left = 0, right = arr.length - 1): number[] {
-    let index;
+    let index: number;
     if(arr.length > 1){
         index = partition(arr, left, right);
         if(left < index - 1){
