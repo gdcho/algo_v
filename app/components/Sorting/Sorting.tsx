@@ -26,7 +26,7 @@ const Sorting = () => {
   const sortAlgorithm = useSelector((state: RootState) => state.sort.sortAlgorithm);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && sortAlgorithm) {
+    if (sortAlgorithm) {
         dispatch(sortArray(sortFunctions[sortAlgorithm](array)));
     }
   }, [sortAlgorithm, array, dispatch]);

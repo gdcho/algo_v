@@ -19,12 +19,11 @@ const Home = () => {
 };
 
 export async function getServerSideProps() {
-  const store = initializeStore();
-  
-  // Dispatch an action to set the initial sortAlgorithm
-  store.dispatch(selectSortAlgorithm('bubbleSort'));
-  
-  return { props: { initialReduxState: store.getState() } };
+  const reduxStore = initializeStore({});
+
+  reduxStore.dispatch(selectSortAlgorithm('bubbleSort'));
+
+  return { props: { initialReduxState: reduxStore.getState() } };
 }
 
 
