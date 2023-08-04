@@ -1,4 +1,5 @@
 // app/page.tsx
+"use client";
 import React from 'react';
 import Sorting from './components/Sorting/Sorting'; 
 import { Provider } from 'react-redux';
