@@ -1,4 +1,4 @@
-// redux/store.ts
+// app/redux/store.ts
 import { configureStore, EnhancedStore, StateFromReducersMapObject } from '@reduxjs/toolkit';
 import { useMemo } from 'react';
 import sortReducer from './reducers/sortReducer';

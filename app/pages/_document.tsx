@@ -1,29 +1,14 @@
 // pages/_document.tsx
-import Document, { Html, Head, Main, NextScript, DocumentContext, DocumentInitialProps } from 'next/document';
-import { Provider } from 'react-redux';
-import { initializeStore } from '../redux/store';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 
-interface MyDocumentInitialProps extends DocumentInitialProps {
-  initialReduxState: any;
-}
-
-class MyDocument extends Document<MyDocumentInitialProps> {
-    static async getInitialProps(ctx: DocumentContext) {
-      const initialProps = await Document.getInitialProps(ctx);
-      const reduxStore = initializeStore({}); 
-  
-      return { ...initialProps, initialReduxState: reduxStore.getState() };
-    }
-
+class MyDocument extends Document {
   render() {
     return (
       <Html>
         <Head />
         <body>
-          <Provider store={initializeStore(this.props.initialReduxState)}>
-            <Main />
-            <NextScript />
-          </Provider>
+          <Main />
+          <NextScript />
         </body>
       </Html>
     );

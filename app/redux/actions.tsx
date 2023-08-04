@@ -1,3 +1,4 @@
+// app/redux/actions.tsx
 export const SELECT_SORT_ALGORITHM = 'SELECT_SORT_ALGORITHM';
 export const SORT_ARRAY = 'SORT_ARRAY';
 

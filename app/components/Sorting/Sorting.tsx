@@ -2,7 +2,7 @@
 "use client";
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { sortArray } from '../../redux/actions';
+import { setAnimations } from '../../redux/reducers/sortReducer';
 import { selectionSort } from '../../algo/selectionSort';
 import { bubbleSort } from '../../algo/bubbleSort';
 import { insertionSort } from '../../algo/insertionSort';
@@ -24,14 +24,22 @@ const Sorting = () => {
   const dispatch = useDispatch();
   const array = useSelector((state: RootState) => state.sort.array);
   const sortAlgorithm = useSelector((state: RootState) => state.sort.sortAlgorithm);
+  const animations = useSelector((state: RootState) => state.sort.animations);
 
   useEffect(() => {
     if (sortAlgorithm) {
-        dispatch(sortArray(sortFunctions[sortAlgorithm](array)));
+      const animations = sortFunctions[sortAlgorithm](array);
+      dispatch(setAnimations(animations));
     }
   }, [sortAlgorithm, array, dispatch]);
 
+  useEffect(() => {
+    animations.forEach(([i, j], index) => {
+      setTimeout(() => {
+      }, index * 100);
+    });
+  }, [animations]);
+
   return <div></div>;
 };
-
 export default Sorting;

@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 
 const Body = () => {
-  const sortedArray = useSelector((state: RootState) => state.sort.sortedArray);
+  const array = useSelector((state: RootState) => state.sort.array);
 
   return (
     <div>
-      Sorted Array: {sortedArray.join(', ')}
+      Array: {array.join(', ')}
     </div>
   );
 };

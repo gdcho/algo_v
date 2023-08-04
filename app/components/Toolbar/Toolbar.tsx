@@ -1,24 +1,33 @@
+// app/components/Toolbar/Toolbar.tsx
 import React, { ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'; 
 import { selectSortAlgorithm } from '../../redux/actions';
+import { setIsRunning } from '../../redux/reducers/sortReducer'; 
+import { RootState } from '../../redux/store'; 
 
 const Toolbar = () => {
   const dispatch = useDispatch();
+  const isRunning = useSelector((state: RootState) => state.sort.isRunning);
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(selectSortAlgorithm(event.target.value));
   };
 
+  const handleStart = () => {
+    dispatch(setIsRunning(true));
+  };
+
+  const handleStop = () => {
+    dispatch(setIsRunning(false));
+  };
+
   return (
-    <select onChange={handleChange}>
-      <option value="">Select a sort algorithm</option>
-      <option value="selectionSort">Selection Sort</option>
-      <option value="bubbleSort">Bubble Sort</option>
-      <option value="insertionSort">Insertion Sort</option>
-      <option value="mergeSort">Merge Sort</option>
-      <option value="quickSort">Quick Sort</option>
-      <option value="heapSort">Heap Sort</option>
-    </select>
+    <div>
+      <select onChange={handleChange}>
+      </select>
+      <button onClick={handleStart} disabled={isRunning}>Start</button>
+      <button onClick={handleStop} disabled={!isRunning}>Stop</button>
+    </div>
   );
 };
 
