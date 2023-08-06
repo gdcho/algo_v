@@ -2,6 +2,21 @@
 
 import { SELECT_SORT_ALGORITHM, SORT_ARRAY } from '../actions'; 
 
+const generateRandomArray = (length: number): number[] => {
+  const array: number[] = [];
+  for (let i = 0; i < length; i++) {
+    array.push(Math.floor(Math.random() * 1000)); 
+  }
+  return array;
+};
+
+const RESIZE_ARRAY = 'RESIZE_ARRAY';
+
+export const resizeArray = (newSize: number) => ({
+  type: RESIZE_ARRAY,
+  payload: generateRandomArray(newSize),
+});
+
 type Action = {
   type: string;
   payload?: any;
@@ -9,7 +24,7 @@ type Action = {
 
 const initialState = {
   sortAlgorithm: null,
-  array: [],
+  array: generateRandomArray(100), 
   sortedArray: [],
   isRunning: false,
   animations: [],  
@@ -27,6 +42,11 @@ export const setIsRunning = (isRunning: boolean) => ({
 
 const sortReducer = (state = initialState, action: Action) => {
   switch (action.type) {
+    case RESIZE_ARRAY:
+      return {
+        ...state,
+        array: action.payload,
+      };
     case SELECT_SORT_ALGORITHM:
       return {
         ...state,
