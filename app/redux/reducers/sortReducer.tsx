@@ -24,7 +24,7 @@ type Action = {
 
 const initialState = {
   sortAlgorithm: null,
-  array: generateRandomArray(100), 
+  array: generateRandomArray(50), 
   sortedArray: [],
   isRunning: false,
   animations: [],  

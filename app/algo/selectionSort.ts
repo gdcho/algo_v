@@ -1,6 +1,7 @@
 // algo/selectionSort.ts
 
-export function selectionSort(arr: number[]): number[] {
+export function selectionSort(originalArr: number[]): number[] {
+    const arr = [...originalArr];
     let n = arr.length;
 
     for(let i = 0; i < n; i++){
@@ -16,5 +17,6 @@ export function selectionSort(arr: number[]): number[] {
             arr[min] = tmp;
         }
     }
+
     return arr;
 }

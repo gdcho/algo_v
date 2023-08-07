@@ -1,6 +1,7 @@
 // algo/heapSort.ts
 
-export function heapSort(arr: number[]): number[] {
+export function heapSort(originalArr: number[]): number[] {
+    const arr = [...originalArr];
     let n = arr.length;
 
     for(let i = Math.floor(n / 2) - 1; i >= 0; i--)

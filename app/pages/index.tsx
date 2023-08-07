@@ -17,7 +17,6 @@ const Home = ({ initialReduxState }) => {
 
   return (
     <div>
-      <h1>Welcome to Algo Visualizer</h1>
       <Provider store={store}>
         <Toolbar />
         <Body />

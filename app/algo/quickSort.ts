@@ -1,7 +1,9 @@
 // algo/quickSort.ts
 
-export function quickSort(arr: number[], left = 0, right = arr.length - 1): number[] {
-    let index: number;
+export function quickSort(originalArr: number[], left = 0, right = originalArr.length - 1): number[] {
+    const arr = [...originalArr];
+    let index;
+
     if(arr.length > 1){
         index = partition(arr, left, right);
         if(left < index - 1){
@@ -11,6 +13,7 @@ export function quickSort(arr: number[], left = 0, right = arr.length - 1): numb
             quickSort(arr, index, right);
         }
     }
+
     return arr;
 }
 

@@ -1,6 +1,8 @@
 // algo/mergeSort.ts
 
-export function mergeSort(arr: number[]): number[] {
+export function mergeSort(originalArr: number[]): number[] {
+    const arr = [...originalArr];
+
     if (arr.length < 2)
         return arr;
 

@@ -1,7 +1,9 @@
 // algo/inserionSort.ts
 
-export function insertionSort(arr: number[]): number[] {
+export function insertionSort(originalArr: number[]): number[] {
+    const arr = [...originalArr];
     let n = arr.length;
+
     for(let i = 1; i < n; i++){
         let key = arr[i];
         let j = i - 1;
@@ -12,5 +14,6 @@ export function insertionSort(arr: number[]): number[] {
         }
         arr[j + 1] = key;
     }
+
     return arr;
 }

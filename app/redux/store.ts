@@ -27,7 +27,6 @@ export const initializeStore = (preloadedState: any) => {
     store = undefined;
   }
 
-  // For SSG and SSR always create a new store
   if (typeof window === 'undefined') return _store;
   if (!store) store = _store;
 
@@ -39,5 +38,4 @@ export function useStore(initialState: any) {
   return store;
 }
 
-// Define RootState type
 export type RootState = StateFromReducersMapObject<typeof reducers>;
