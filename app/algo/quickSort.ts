@@ -1,39 +1,33 @@
 // algo/quickSort.ts
 
-export function quickSort(originalArr: number[], left = 0, right = originalArr.length - 1): number[] {
+export function quickSort(originalArr: number[]): any[] {
     const arr = [...originalArr];
-    let index;
-
-    if(arr.length > 1){
-        index = partition(arr, left, right);
-        if(left < index - 1){
-            quickSort(arr, left, index - 1);
-        }
-        if(index < right){
-            quickSort(arr, index, right);
-        }
-    }
-
-    return arr;
+    let animations = [];
+    quickSortHelper(arr, 0, arr.length - 1, animations);
+    return animations;
 }
 
-function partition(arr: number[], left: number, right: number): number {
-    let pivot = arr[Math.floor((right + left) / 2)];
-    let i = left;
-    let j = right;
+function quickSortHelper(arr: number[], left: number, right: number, animations: any[]): void {
+    if (left < right) {
+        let pivotIndex = partition(arr, left, right, animations);
+        quickSortHelper(arr, left, pivotIndex - 1, animations);
+        quickSortHelper(arr, pivotIndex + 1, right, animations);
+    }
+}
 
-    while(i <= j){
-        while(arr[i] < pivot){
-            i++;
-        }
-        while(arr[j] > pivot){
-            j--;
-        }
-        if(i <= j){
+function partition(arr: number[], left: number, right: number, animations: any[]): number {
+    let pivot = arr[right];
+    let i = left;
+
+    for (let j = left; j < right; j++) {
+        if (arr[j] <= pivot) {
+            animations.push([i, j]);
             [arr[i], arr[j]] = [arr[j], arr[i]];
             i++;
-            j--;
         }
     }
+    animations.push([i, right]);
+    [arr[i], arr[right]] = [arr[right], arr[i]];
     return i;
 }
+
