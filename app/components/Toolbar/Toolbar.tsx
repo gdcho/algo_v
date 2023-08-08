@@ -1,5 +1,5 @@
 // app/components/Toolbar/Toolbar.tsx
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSortAlgorithm } from "../../redux/actions";
 import { setIsRunning } from "../../redux/reducers/sortReducer";
@@ -19,6 +19,8 @@ const Toolbar = () => {
   ];
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    window.location.reload();
+    dispatch(setIsRunning(false));
     dispatch(selectSortAlgorithm(event.target.value));
   };
 
@@ -29,6 +31,10 @@ const Toolbar = () => {
   const handleStop = () => {
     dispatch(setIsRunning(false));
   };
+
+  useEffect(() => {
+    console.log("isRunning:", isRunning);
+  }, [isRunning]);  
 
   return (
     <div>

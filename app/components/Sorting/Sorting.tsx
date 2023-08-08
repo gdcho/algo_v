@@ -64,6 +64,19 @@ const Sorting = () => {
   const animations = useSelector((state: RootState) => state.sort.animations);
 
   useEffect(() => {
+    if (animations.length > 0) {
+      const [i, j] = animations[0];
+      highlightElements(i, j);
+      setTimeout(() => {
+        if (shouldSwap(i, j)) {
+          animateSwap(i, j);
+        }
+        resetHighlight(i, j);
+      }, someDuration);
+    }
+  }, [animations]);
+
+  useEffect(() => {
     if (sortAlgorithm) {
       const animations = sortFunctions[sortAlgorithm](array);
       console.log(sortAlgorithm, animations);

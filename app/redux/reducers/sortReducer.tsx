@@ -57,6 +57,11 @@ const sortReducer = (state = initialState, action: Action) => {
         ...state,
         array: action.payload,
       };
+      case 'SET_IS_RUNNING':
+    return {
+        ...state,
+        isRunning: action.payload,
+    };
     case 'SET_ANIMATIONS':
       return {
         ...state,
