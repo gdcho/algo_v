@@ -1,35 +1,18 @@
 // components/Bar/Bar.tsx
 "use client";
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-type BarProps = {
+interface BarProps {
   value: number;
   maxBarHeight: number;
-};
+  height: number;
+  color: string;
+}
 
-const Bar: React.FC<BarProps> = ({ value, maxBarHeight }) => {
-  const [isServer, setIsServer] = useState(true);
-
-  useEffect(() => {
-    setIsServer(false); 
-  }, []);
-
-  const heightPercentage = (value / 1000) * 100; 
-  const height = isServer 
-    ? 0
-    : (heightPercentage / 100) * maxBarHeight;
-
-  return (
-    <div
-      style={{
-        height: `${height}px`,
-        width: '5px',
-        backgroundColor: 'blue', 
-        margin: '0 1px',
-      }}
-    ></div>
-  );
+const Bar: React.FC<BarProps> = ({ value, maxBarHeight, height, color }) => {
+  return <div className="bar" style={{ height: `${height}px`, backgroundColor: color }}></div>;
 };
 
 export default Bar;
+
 

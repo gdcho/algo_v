@@ -1,20 +1,25 @@
 // redux/reducers/sortReducer.tsx
 
-import { SELECT_SORT_ALGORITHM, SORT_ARRAY } from '../actions'; 
+import { SELECT_SORT_ALGORITHM, SORT_ARRAY, UPDATE_ARRAY } from "../actions";
 
 const generateRandomArray = (length: number): number[] => {
   const array: number[] = [];
   for (let i = 0; i < length; i++) {
-    array.push(Math.floor(Math.random() * 1000)); 
+    array.push(Math.floor(Math.random() * 1000));
   }
   return array;
 };
 
-const RESIZE_ARRAY = 'RESIZE_ARRAY';
+const RESIZE_ARRAY = "RESIZE_ARRAY";
 
 export const resizeArray = (newSize: number) => ({
   type: RESIZE_ARRAY,
   payload: generateRandomArray(newSize),
+});
+
+export const updateArray = (newArray: number[]) => ({
+  type: UPDATE_ARRAY,
+  payload: newArray,
 });
 
 type Action = {
@@ -24,19 +29,19 @@ type Action = {
 
 const initialState = {
   sortAlgorithm: null,
-  array: generateRandomArray(50), 
+  array: generateRandomArray(50),
   sortedArray: [],
   isRunning: false,
-  animations: [],  
+  animations: [],
 };
 
 export const setAnimations = (animations: any[]) => ({
-  type: 'SET_ANIMATIONS',
+  type: "SET_ANIMATIONS",
   payload: animations,
 });
 
 export const setIsRunning = (isRunning: boolean) => ({
-  type: 'SET_IS_RUNNING',
+  type: "SET_IS_RUNNING",
   payload: isRunning,
 });
 
@@ -57,12 +62,18 @@ const sortReducer = (state = initialState, action: Action) => {
         ...state,
         array: action.payload,
       };
-      case 'SET_IS_RUNNING':
-    return {
+    case UPDATE_ARRAY:
+      return {
+        ...state,
+        array: action.payload,
+      };
+
+    case "SET_IS_RUNNING":
+      return {
         ...state,
         isRunning: action.payload,
-    };
-    case 'SET_ANIMATIONS':
+      };
+    case "SET_ANIMATIONS":
       return {
         ...state,
         animations: action.payload,

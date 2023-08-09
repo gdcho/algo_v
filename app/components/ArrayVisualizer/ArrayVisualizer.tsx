@@ -1,20 +1,39 @@
 // components/ArrayVisualizer/ArrayVisualizer.tsx
 "use client";
-import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import React, { useEffect, useState } from "react";
 import Bar from "../Bar/Bar";
 
-const ArrayVisualizer: React.FC = () => {
-  const array = useSelector((state: RootState) => state.sort.array);
+interface ArrayVisualizerProps {
+  array?: number[]; 
+}
+
+const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ array = [] }) => {
+  const [computedArray, setComputedArray] = useState<number[]>([]);
   const maxBarHeight = 400;
-  type ArrayElementType = number;
+
+  useEffect(() => {
+    const maxArrayValue = array && Array.isArray(array) ? Math.max(...array) : 0;
+    const newArray = array.map(value => (value / maxArrayValue) * maxBarHeight);
+
+    if (JSON.stringify(newArray) !== JSON.stringify(computedArray)) {
+      setComputedArray(newArray);
+    }
+  }, [array]);
 
   return (
     <div style={{ display: "flex", alignItems: "flex-end" }}>
-      {array.map((value: ArrayElementType, index: number) => (
-        <Bar key={index} value={value} maxBarHeight={maxBarHeight} />
-      ))}
+      {computedArray.map((height, index) => {
+        const color = "blue";
+        return (
+          <Bar
+            key={index}
+            value={array[index]}
+            maxBarHeight={maxBarHeight}
+            height={height}
+            color={color}
+          />
+        );
+      })}
     </div>
   );
 };

@@ -1,56 +1,41 @@
 // app/components/Toolbar/Toolbar.tsx
 import React, { ChangeEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSortAlgorithm } from "../../redux/actions";
+import { selectSortAlgorithm, setAnimations } from "../../redux/actions"; 
 import { setIsRunning } from "../../redux/reducers/sortReducer";
 import { RootState } from "../../redux/store";
+import { bubbleSort } from "../../algo/bubbleSort"
+import { selectionSort } from "../../algo/selectionSort"
+import { insertionSort } from "../../algo/insertionSort"
+import { mergeSort } from "../../algo/mergeSort"
+import { quickSort } from "../../algo/quickSort"
+import { heapSort } from "../../algo/heapSort"
+
+const sortFunctions = {
+  bubbleSort,
+  selectionSort,
+  insertionSort,
+  mergeSort,
+  quickSort,
+  heapSort,
+};
 
 const Toolbar = () => {
   const dispatch = useDispatch();
-  const isRunning = useSelector((state: RootState) => state.sort.isRunning);
-
-  const algorithms = [
-    "bubbleSort",
-    "heapSort",
-    "insertionSort",
-    "mergeSort",
-    "quickSort",
-    "selectionSort",
-  ];
-
-  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    window.location.reload();
-    dispatch(setIsRunning(false));
-    dispatch(selectSortAlgorithm(event.target.value));
-  };
+  const sortAlgorithm = useSelector((state: RootState) => state.sort.sortAlgorithm);
+  const array = useSelector((state: RootState) => state.sort.array);
 
   const handleStart = () => {
-    dispatch(setIsRunning(true));
+    if (sortAlgorithm) {
+      const animations = sortFunctions[sortAlgorithm](array);
+      dispatch(setAnimations(animations));
+    }
   };
-
-  const handleStop = () => {
-    dispatch(setIsRunning(false));
-  };
-
-  useEffect(() => {
-    console.log("isRunning:", isRunning);
-  }, [isRunning]);  
 
   return (
     <div>
-      <select onChange={handleChange}>
-        {algorithms.map((algorithm, index) => (
-          <option key={index} value={algorithm}>
-            {algorithm}
-          </option>
-        ))}
-      </select>
-      <button onClick={handleStart} disabled={isRunning}>
-        Start
-      </button>
-      <button onClick={handleStop} disabled={!isRunning}>
-        Stop
-      </button>
+      {/* Other toolbar elements */}
+      <button onClick={handleStart}>Start</button>
     </div>
   );
 };
