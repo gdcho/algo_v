@@ -1,39 +1,29 @@
-// components/ArrayVisualizer/ArrayVisualizer.tsx
-"use client";
-import React, { useEffect, useState } from "react";
-import Bar from "../Bar/Bar";
+import React from 'react';
 
 interface ArrayVisualizerProps {
-  array?: number[]; 
+  data: number[];
+  highlightedIndices?: number[];
 }
 
-const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ array = [] }) => {
-  const [computedArray, setComputedArray] = useState<number[]>([]);
-  const maxBarHeight = 400;
-
-  useEffect(() => {
-    const maxArrayValue = array && Array.isArray(array) ? Math.max(...array) : 0;
-    const newArray = array.map(value => (value / maxArrayValue) * maxBarHeight);
-
-    if (JSON.stringify(newArray) !== JSON.stringify(computedArray)) {
-      setComputedArray(newArray);
-    }
-  }, [array]);
+const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ data, highlightedIndices = [] }) => {
+  const maxValue = Math.max(...data);
+  console.log("Data:", data);
+console.log("Max Value:", maxValue);
+console.log("Highlighted Indices:", highlightedIndices);
 
   return (
-    <div style={{ display: "flex", alignItems: "flex-end" }}>
-      {computedArray.map((height, index) => {
-        const color = "blue";
-        return (
-          <Bar
-            key={index}
-            value={array[index]}
-            maxBarHeight={maxBarHeight}
-            height={height}
-            color={color}
-          />
-        );
-      })}
+    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end', height: '300px', marginTop: '50px'}}>
+      {data.map((value, index) => (
+        <div
+          key={index}
+          style={{
+            height: `${(value / maxValue) * 100}%`,
+            width: '5px',
+            margin: '0 1px',
+            backgroundColor: highlightedIndices.includes(index) ? 'red' : 'blue', 
+          }}
+        ></div>
+      ))}
     </div>
   );
 };
