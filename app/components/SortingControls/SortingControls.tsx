@@ -4,12 +4,14 @@ interface SortingControlsProps {
   onStartSorting: () => void;
   onReset: () => void;
   onAlgorithmChange: (algorithm: string) => void;
+  onElementCountChange?: (count: number) => void; 
 }
 
 const SortingControls: React.FC<SortingControlsProps> = ({
   onStartSorting,
   onReset,
   onAlgorithmChange,
+  onElementCountChange,
 }) => {
   return (
     <div>
@@ -23,10 +25,18 @@ const SortingControls: React.FC<SortingControlsProps> = ({
       </select>
 
       <button onClick={onStartSorting}>Start Sorting</button>
-
       <button onClick={onReset}>Reset</button>
 
-      {/* slider to adjust speed or number of elements */}
+      <div>
+        <label>Array Size: </label>
+        <input 
+          type="range" 
+          min="10" 
+          max="300" 
+          defaultValue="100" 
+          onChange={(e) => onElementCountChange && onElementCountChange(Number(e.target.value))} 
+        />
+      </div>
     </div>
   );
 };

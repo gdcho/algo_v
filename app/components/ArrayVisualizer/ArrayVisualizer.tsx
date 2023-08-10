@@ -7,9 +7,6 @@ interface ArrayVisualizerProps {
 
 const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ data, highlightedIndices = [] }) => {
   const maxValue = Math.max(...data);
-  console.log("Data:", data);
-console.log("Max Value:", maxValue);
-console.log("Highlighted Indices:", highlightedIndices);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end', height: '300px', marginTop: '50px'}}>
