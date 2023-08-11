@@ -1,21 +1,17 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { startSorting, resetArray, setAlgorithm } from '../../redux/actions';
 
 interface SortingControlsProps {
-  onStartSorting: () => void;
-  onReset: () => void;
-  onAlgorithmChange: (algorithm: string) => void;
   onElementCountChange?: (count: number) => void; 
 }
 
-const SortingControls: React.FC<SortingControlsProps> = ({
-  onStartSorting,
-  onReset,
-  onAlgorithmChange,
-  onElementCountChange,
-}) => {
+const SortingControls: React.FC<SortingControlsProps> = ({ onElementCountChange }) => {
+  const dispatch = useDispatch();
+
   return (
     <div>
-      <select onChange={(e) => onAlgorithmChange(e.target.value)}>
+      <select onChange={(e) => dispatch(setAlgorithm(e.target.value))}>
         <option value="bubbleSort">Bubble Sort</option>
         <option value="quickSort">Quick Sort</option>
         <option value="mergeSort">Merge Sort</option>
@@ -24,8 +20,8 @@ const SortingControls: React.FC<SortingControlsProps> = ({
         <option value="selectionSort">Selection Sort</option>
       </select>
 
-      <button onClick={onStartSorting}>Start Sorting</button>
-      <button onClick={onReset}>Reset</button>
+      <button onClick={() => dispatch(startSorting())}>Start Sorting</button>
+      <button onClick={() => dispatch(resetArray())}>Reset</button>
 
       <div>
         <label>Array Size: </label>

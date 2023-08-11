@@ -1,3 +1,4 @@
+import { data } from 'autoprefixer';
 import React from 'react';
 
 interface ArrayVisualizerProps {

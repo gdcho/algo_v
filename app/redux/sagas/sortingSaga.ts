@@ -1,17 +1,21 @@
 import { takeLatest, select, put } from "redux-saga/effects";
 import { bubbleSort } from "../../lib/algorithms/bubbleSort";
 import { quickSort } from "../../lib/algorithms/quickSort";
-import { heapSort } from "@/app/lib/algorithms/heapSort";
-import { insertionSort } from "@/app/lib/algorithms/insertionSort";
-import { mergeSort } from "@/app/lib/algorithms/mergeSort";
-import { selectionSort } from "@/app/lib/algorithms/selectionSort";
+import { heapSort } from "../../lib/algorithms/heapSort";
+import { insertionSort } from "../../lib/algorithms/insertionSort";
+import { mergeSort } from "../../lib/algorithms/mergeSort";
+import { selectionSort } from "../../lib/algorithms/selectionSort";
 import { SagaIterator } from 'redux-saga';
 import { updateArray } from "../../redux/actions";
 import { START_SORTING } from "../../redux/actions";
 
 function* handleStartSorting(): SagaIterator {
+  console.log("handleStartSorting triggered"); 
   const array = yield select((state) => state.array);
   const algorithm = yield select((state) => state.algorithm);
+
+  console.log("Selected algorithm:", algorithm); 
+  console.log("Initial array:", array); 
 
   let sortedArray;
   switch (algorithm) {
@@ -38,6 +42,8 @@ function* handleStartSorting(): SagaIterator {
   }
 
   yield put(updateArray(sortedArray));
+
+  console.log("Sorted array:", sortedArray); 
 }
 
 export function* watchStartSorting(): SagaIterator {
