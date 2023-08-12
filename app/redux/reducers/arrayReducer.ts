@@ -10,7 +10,7 @@ export const arrayReducer = (
     case "SET_ARRAY":
       return action.payload;
     case "RESET_ARRAY":
-      return [];
+      window.location.reload();
     // ... other actions related to the array
     default:
       return state;

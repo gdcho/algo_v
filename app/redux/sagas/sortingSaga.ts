@@ -1,49 +1,57 @@
 import { takeLatest, select, put } from "redux-saga/effects";
-import { bubbleSort } from "../../lib/algorithms/bubbleSort";
-import { quickSort } from "../../lib/algorithms/quickSort";
-import { heapSort } from "../../lib/algorithms/heapSort";
-import { insertionSort } from "../../lib/algorithms/insertionSort";
-import { mergeSort } from "../../lib/algorithms/mergeSort";
-import { selectionSort } from "../../lib/algorithms/selectionSort";
-import { SagaIterator } from 'redux-saga';
+import { bubbleSortGenerator } from "../../lib/algorithms/bubbleSort";
+import { quickSortGenerator } from "../../lib/algorithms/quickSort";
+import { heapSortGenerator } from "../../lib/algorithms/heapSort";
+import { insertionSortGenerator } from "../../lib/algorithms/insertionSort";
+import { mergeSortGenerator } from "../../lib/algorithms/mergeSort";
+import { selectionSortGenerator } from "../../lib/algorithms/selectionSort";
+import { SagaIterator } from "redux-saga";
 import { updateArray } from "../../redux/actions";
 import { START_SORTING } from "../../redux/actions";
+import { delay } from "redux-saga/effects";
 
 function* handleStartSorting(): SagaIterator {
-  console.log("handleStartSorting triggered"); 
+  console.log("handleStartSorting triggered");
   const array = yield select((state) => state.array);
   const algorithm = yield select((state) => state.algorithm);
 
-  console.log("Selected algorithm:", algorithm); 
-  console.log("Initial array:", array); 
+  console.log("Selected algorithm:", algorithm);
+  console.log("Initial array:", array);
 
-  let sortedArray;
+  let sortingGenerator;
   switch (algorithm) {
     case "bubbleSort":
-      sortedArray = bubbleSort([...array]);
+      sortingGenerator = bubbleSortGenerator([...array]);
       break;
     case "quickSort":
-      sortedArray = quickSort([...array]);
+      sortingGenerator = quickSortGenerator([...array]);
       break;
     case "heapSort":
-      sortedArray = heapSort([...array]);
+      sortingGenerator = heapSortGenerator([...array]);
       break;
     case "insertionSort":
-      sortedArray = insertionSort([...array]);
+      sortingGenerator = insertionSortGenerator([...array]);
       break;
     case "mergeSort":
-      sortedArray = mergeSort([...array]);
+      sortingGenerator = mergeSortGenerator([...array]);
       break;
     case "selectionSort":
-      sortedArray = selectionSort([...array]);
+      sortingGenerator = selectionSortGenerator([...array]);
       break;
     default:
       return;
   }
 
-  yield put(updateArray(sortedArray));
+  let sortedArray;
+  let result = sortingGenerator.next();
+  while (!result.done) {
+    sortedArray = result.value;
+    yield put(updateArray(sortedArray));
+    yield delay(50);
+    result = sortingGenerator.next();
+  }
 
-  console.log("Sorted array:", sortedArray); 
+  console.log("Sorted array:", sortedArray);
 }
 
 export function* watchStartSorting(): SagaIterator {

@@ -1,15 +1,14 @@
-export const insertionSort = (arr: number[]): number[] => {
-    let n = arr.length;
-    for (let i = 1; i < n; i++) {
+export function* insertionSortGenerator(arr: number[]): Generator<number[], void, void> {
+  for (let i = 1; i < arr.length; i++) {
       let key = arr[i];
       let j = i - 1;
-  
+
       while (j >= 0 && arr[j] > key) {
-        arr[j + 1] = arr[j];
-        j = j - 1;
+          arr[j + 1] = arr[j];
+          j = j - 1;
+          yield arr.slice();
       }
       arr[j + 1] = key;
-    }
-    return arr;
-  };
-  
+      yield arr.slice();
+  }
+}

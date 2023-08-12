@@ -1,18 +1,14 @@
-export const selectionSort = (arr: number[]): number[] => {
-    let n = arr.length;
-  
-    for (let i = 0; i < n - 1; i++) {
+export function* selectionSortGenerator(arr: number[]): Generator<number[], void, void> {
+  for (let i = 0; i < arr.length; i++) {
       let minIdx = i;
-      for (let j = i + 1; j < n; j++) {
-        if (arr[j] < arr[minIdx]) {
-          minIdx = j;
-        }
+      for (let j = i + 1; j < arr.length; j++) {
+          if (arr[j] < arr[minIdx]) {
+              minIdx = j;
+          }
       }
       if (minIdx !== i) {
-        [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+          [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+          yield arr.slice();
       }
-    }
-  
-    return arr;
-  };
-  
+  }
+}
