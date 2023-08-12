@@ -6,12 +6,25 @@ import { insertionSortGenerator } from "../../lib/algorithms/insertionSort";
 import { mergeSortGenerator } from "../../lib/algorithms/mergeSort";
 import { selectionSortGenerator } from "../../lib/algorithms/selectionSort";
 import { SagaIterator } from "redux-saga";
-import { updateArray } from "../../redux/actions";
-import { START_SORTING } from "../../redux/actions";
 import { delay } from "redux-saga/effects";
+import {
+  updateArray,
+  setCurrentBubble,
+  setCurrentSwappers,
+  setCurrentSorted,
+  setRunning,
+  START_SORTING
+} from "../../redux/actions";
+
+type SortingYieldValue = {
+  type: "compare" | "swap"; 
+  indices: number[];
+  array: number[];
+};
 
 function* handleStartSorting(): SagaIterator {
   console.log("handleStartSorting triggered");
+
   const array = yield select((state) => state.array);
   const algorithm = yield select((state) => state.algorithm);
 
@@ -42,18 +55,36 @@ function* handleStartSorting(): SagaIterator {
       return;
   }
 
-  let sortedArray;
-  let result = sortingGenerator.next();
+  let finalSortedArray = [...array]; 
+  let result = sortingGenerator.next() as IteratorResult<SortingYieldValue>;
   while (!result.done) {
-    sortedArray = result.value;
-    yield put(updateArray(sortedArray));
-    yield delay(50);
-    result = sortingGenerator.next();
+    const { type, indices, array: updatedArray } = result.value;
+
+    switch (type) {
+      case "compare":
+        yield put(setCurrentBubble(indices));
+        break;
+      case "swap":
+        yield put(setCurrentSwappers(indices));
+        break;
+    }
+
+    yield put(updateArray(updatedArray)); 
+    finalSortedArray = updatedArray; 
+    yield delay(50);  
+    result = sortingGenerator.next() as IteratorResult<SortingYieldValue>;
   }
 
-  console.log("Sorted array:", sortedArray);
+  yield put(setCurrentBubble([]));  
+  yield put(setCurrentSwappers([]));  
+  yield put(setCurrentSorted(finalSortedArray.map((_, index: number) => index)));  
+
+  yield put(setRunning(false));  
+
+  console.log("Sorted array:", finalSortedArray); 
 }
 
 export function* watchStartSorting(): SagaIterator {
   yield takeLatest(START_SORTING, handleStartSorting);
 }
+

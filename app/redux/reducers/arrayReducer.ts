@@ -1,6 +1,9 @@
+import { UPDATE_ARRAY } from "../actions";
+
 type ArrayAction =
   | { type: "SET_ARRAY"; payload: number[] }
-  | { type: "RESET_ARRAY" };
+  | { type: "RESET_ARRAY" }
+  | { type: typeof UPDATE_ARRAY; payload: number[] };
 
 export const arrayReducer = (
   state: number[] = [],
@@ -9,9 +12,10 @@ export const arrayReducer = (
   switch (action.type) {
     case "SET_ARRAY":
       return action.payload;
+    case UPDATE_ARRAY:
+      return action.payload;
     case "RESET_ARRAY":
       window.location.reload();
-    // ... other actions related to the array
     default:
       return state;
   }
