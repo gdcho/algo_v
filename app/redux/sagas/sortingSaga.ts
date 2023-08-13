@@ -63,15 +63,18 @@ function* handleStartSorting(): SagaIterator {
     switch (type) {
       case "compare":
         yield put(setCurrentBubble(indices));
+        yield delay(50); 
+        yield put(setCurrentBubble([]));  
         break;
       case "swap":
         yield put(setCurrentSwappers(indices));
+        yield delay(50);  
+        yield put(setCurrentSwappers([]));  
         break;
     }
 
     yield put(updateArray(updatedArray)); 
     finalSortedArray = updatedArray; 
-    yield delay(50);  
     result = sortingGenerator.next() as IteratorResult<SortingYieldValue>;
   }
 

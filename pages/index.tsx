@@ -26,7 +26,7 @@ const Home: React.FC = () => {
     <div>
       <h1>Algo V</h1>
       <SortingControls onElementCountChange={handleElementCountChange} />
-      <ArrayVisualizer data={sampleData} />
+      <ArrayVisualizer data={sampleData} key={sampleData.length} />
       {/* Add other components as needed */}
     </div>
   );

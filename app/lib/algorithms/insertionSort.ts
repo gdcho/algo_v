@@ -4,11 +4,11 @@ export function* insertionSortGenerator(arr: number[]): Generator<{type: string,
       let j = i - 1;
 
       while (j >= 0 && arr[j] > key) {
+          yield { type: "compare", indices: [j, j + 1], array: arr.slice() }; 
           arr[j + 1] = arr[j];
           j = j - 1;
-          yield { type: "swap", indices: [j + 1, j], array: arr.slice() };
       }
       arr[j + 1] = key;
-      yield { type: "compare", indices: [j + 1, i], array: arr.slice() };
+      yield { type: "swap", indices: [j + 1, i], array: arr.slice() }; 
   }
 }

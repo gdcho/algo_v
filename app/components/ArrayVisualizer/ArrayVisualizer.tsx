@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducers";
 
@@ -15,6 +15,22 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ data }) => {
   );
   const currentSorted = useSelector((state: RootState) => state.currentSorted);
 
+  const [indices, setIndices] = useState<number[]>(data.map((_, i) => i));
+
+  useEffect(() => {
+    if (currentSwappers.length === 2) {
+      const [i, j] = currentSwappers;
+      const newIndices = [...indices];
+      [newIndices[i], newIndices[j]] = [newIndices[j], newIndices[i]];
+      setIndices(newIndices);
+    }
+  }, [currentSwappers]);
+
+  useEffect(() => {
+    setIndices(data.map((_, i) => i));
+}, [data]);
+
+
   return (
     <div
       style={{
@@ -25,11 +41,11 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ data }) => {
         marginTop: "50px",
       }}
     >
-      {data.map((value, index) => (
+      {indices.map((index) => (
         <div
-          key={`${value}-${index}`}
+          key={index}
           style={{
-            height: `${(value / maxValue) * 100}%`,
+            height: `${(data[index] / maxValue) * 100}%`,
             width: "5px",
             margin: "0 1px",
             backgroundColor: getColor(index),

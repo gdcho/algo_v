@@ -1,15 +1,16 @@
-export function* mergeSortGenerator(arr: number[]): Generator<{type: string, indices: number[], array: number[]}, number[], void> {
+export function* mergeSortGenerator(arr: number[], startIndex = 0): Generator<{type: string, indices: number[], array: number[]}, number[], void> {
     if (arr.length <= 1) {
         yield { type: "compare", indices: [], array: arr.slice() };
         return arr;
     }
   
-    const merge = function* (left: number[], right: number[]): Generator<{type: string, indices: number[], array: number[]}, number[], void> {
+    const merge = function* (left: number[], right: number[], leftStart: number, rightStart: number): Generator<{type: string, indices: number[], array: number[]}, number[], void> {
         let result = [];
         let leftIndex = 0;
         let rightIndex = 0;
   
         while (leftIndex < left.length && rightIndex < right.length) {
+            yield { type: "compare", indices: [leftStart + leftIndex, rightStart + rightIndex], array: result.concat(left).concat(right) };
             if (left[leftIndex] < right[rightIndex]) {
                 result.push(left[leftIndex]);
                 leftIndex++;
@@ -17,19 +18,16 @@ export function* mergeSortGenerator(arr: number[]): Generator<{type: string, ind
                 result.push(right[rightIndex]);
                 rightIndex++;
             }
-            yield { type: "compare", indices: [leftIndex, rightIndex], array: result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex)) };
         }
   
         while (leftIndex < left.length) {
             result.push(left[leftIndex]);
             leftIndex++;
-            yield { type: "compare", indices: [leftIndex], array: result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex)) };
         }
   
         while (rightIndex < right.length) {
             result.push(right[rightIndex]);
             rightIndex++;
-            yield { type: "compare", indices: [rightIndex], array: result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex)) };
         }
   
         return result;
@@ -39,11 +37,10 @@ export function* mergeSortGenerator(arr: number[]): Generator<{type: string, ind
     const left = arr.slice(0, mid);
     const right = arr.slice(mid);
   
-    const leftSorted: number[] = yield* mergeSortGenerator(left);
-    const rightSorted: number[] = yield* mergeSortGenerator(right);
+    const leftSorted: number[] = yield* mergeSortGenerator(left, startIndex);
+    const rightSorted: number[] = yield* mergeSortGenerator(right, startIndex + mid);
   
-    const sortedArray = yield* merge(leftSorted, rightSorted);
+    const sortedArray = yield* merge(leftSorted, rightSorted, startIndex, startIndex + mid);
     yield { type: "sorted", indices: [], array: sortedArray };
     return sortedArray;
-  }
-  
+}
