@@ -6,9 +6,10 @@ export function* insertionSortGenerator(arr: number[]): Generator<{type: string,
       while (j >= 0 && arr[j] > key) {
           yield { type: "compare", indices: [j, j + 1], array: arr.slice() }; 
           arr[j + 1] = arr[j];
+          yield { type: "swap", indices: [j, j + 1], array: arr.slice() };  
           j = j - 1;
       }
       arr[j + 1] = key;
-      yield { type: "swap", indices: [j + 1, i], array: arr.slice() }; 
   }
+  yield { type: "sorted", indices: [], array: arr.slice() }; 
 }
