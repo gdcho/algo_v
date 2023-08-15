@@ -7,6 +7,7 @@ export const SET_CURRENT_BUBBLE = "SET_CURRENT_BUBBLE";
 export const SET_CURRENT_SWAPPERS = "SET_CURRENT_SWAPPERS";
 export const SET_CURRENT_SORTED = "SET_CURRENT_SORTED";
 export const SET_RUNNING = "SET_RUNNING";
+export const MOVE_ELEMENT = 'MOVE_ELEMENT';
 
 export const setAlgorithm = (algorithm: string) => ({
   type: SET_ALGORITHM,
@@ -51,3 +52,15 @@ export const setRunning = (isRunning: boolean) => ({
   payload: isRunning,
 });
 
+export interface MoveElementAction {
+  type: typeof MOVE_ELEMENT;
+  payload: {
+    from: number;
+    to: number;
+  };
+}
+
+export const moveElement = (from: number, to: number): MoveElementAction => ({
+  type: MOVE_ELEMENT,
+  payload: { from, to }
+});

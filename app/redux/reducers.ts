@@ -8,12 +8,18 @@ import {
   SET_CURRENT_SWAPPERS,
   SET_CURRENT_SORTED,
   SET_RUNNING,
+  MOVE_ELEMENT,
+  MoveElementAction
 } from "../redux/actions";
 
 const initialBubbleState: number[] = [];
 const initialSwappersState: number[] = [];
 const initialSortedState: number[] = [];
 const initialRunningState: boolean = false;
+const initialMoveElementState = {
+  from: null,
+  to: null,
+};
 
 type BubbleAction = {
   type: typeof SET_CURRENT_BUBBLE;
@@ -35,7 +41,7 @@ type RunningAction = {
   payload: boolean;
 };
 
-type ActionTypes = BubbleAction | SwappersAction | SortedAction | RunningAction;
+type ActionTypes = BubbleAction | SwappersAction | SortedAction | RunningAction | MoveElementAction;
 
 export const currentBubbleReducer = (
   state = initialBubbleState,
@@ -85,6 +91,18 @@ export const runningReducer = (
   }
 };
 
+export const moveElementReducer = (
+  state = initialMoveElementState,
+  action: ActionTypes
+) => {
+  switch (action.type) {
+    case MOVE_ELEMENT:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 export const rootReducer = combineReducers({
   array: arrayReducer,
   algorithm: algorithmReducer,
@@ -94,6 +112,7 @@ export const rootReducer = combineReducers({
   currentSwappers: currentSwappersReducer,
   currentSorted: currentSortedReducer,
   running: runningReducer,
+  moveElement: moveElementReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

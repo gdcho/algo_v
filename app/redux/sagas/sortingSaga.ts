@@ -13,18 +13,19 @@ import {
   setCurrentSwappers,
   setCurrentSorted,
   setRunning,
-  START_SORTING
+  START_SORTING,
+  moveElement,
 } from "../../redux/actions";
 
 type SortingYieldValue = {
-  type: "compare" | "swap"; 
+  type: "compare" | "swap" | "move";
   indices: number[];
   array: number[];
+  from?: number;
+  to?: number;
 };
 
 function* handleStartSorting(): SagaIterator {
-  console.log("handleStartSorting triggered");
-
   const array = yield select((state) => state.array);
   const algorithm = yield select((state) => state.algorithm);
 
@@ -55,39 +56,46 @@ function* handleStartSorting(): SagaIterator {
       return;
   }
 
-  let finalSortedArray = [...array]; 
+  let finalSortedArray = [...array];
   let result = sortingGenerator.next() as IteratorResult<SortingYieldValue>;
   while (!result.done) {
-    const { type, indices, array: updatedArray } = result.value;
+    const { type, indices, array: updatedArray, from, to } = result.value;
 
     switch (type) {
       case "compare":
         yield put(setCurrentBubble(indices));
-        yield delay(50); 
-        yield put(setCurrentBubble([]));  
+        yield delay(50);
+        yield put(setCurrentBubble([]));
         break;
       case "swap":
         yield put(setCurrentSwappers(indices));
-        yield delay(50);  
-        yield put(setCurrentSwappers([]));  
+        yield delay(50);
+        yield put(setCurrentSwappers([]));
+        break;
+      case "move":
+        if (from !== undefined && to !== undefined) {
+          yield put(moveElement(from, to));
+          yield delay(50);
+        }
         break;
     }
 
-    yield put(updateArray(updatedArray)); 
-    finalSortedArray = updatedArray; 
+    yield put(updateArray(updatedArray));
+    finalSortedArray = updatedArray;
     result = sortingGenerator.next() as IteratorResult<SortingYieldValue>;
   }
 
-  yield put(setCurrentBubble([]));  
-  yield put(setCurrentSwappers([]));  
-  yield put(setCurrentSorted(finalSortedArray.map((_, index: number) => index)));  
+  yield put(setCurrentBubble([]));
+  yield put(setCurrentSwappers([]));
+  yield put(
+    setCurrentSorted(finalSortedArray.map((_, index: number) => index))
+  );
 
-  yield put(setRunning(false));  
+  yield put(setRunning(false));
 
-  console.log("Sorted array:", finalSortedArray); 
+  console.log("Sorted array:", finalSortedArray);
 }
 
 export function* watchStartSorting(): SagaIterator {
   yield takeLatest(START_SORTING, handleStartSorting);
 }
-

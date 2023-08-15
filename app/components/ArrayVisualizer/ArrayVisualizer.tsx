@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducers";
 
@@ -30,7 +30,6 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ data }) => {
     setIndices(data.map((_, i) => i));
 }, [data]);
 
-
   return (
     <div
       style={{
@@ -41,17 +40,18 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ data }) => {
         marginTop: "50px",
       }}
     >
-      {indices.map((index) => (
-        <div
-          key={index}
-          style={{
-            height: `${(data[index] / maxValue) * 100}%`,
-            width: "5px",
-            margin: "0 1px",
-            backgroundColor: getColor(index),
-          }}
-        ></div>
-      ))}
+      {data.map((value, index) => (
+  <div
+    key={index}
+    style={{
+      height: `${(value / maxValue) * 100}%`,
+      width: "5px",
+      margin: "0 1px",
+      backgroundColor: getColor(index),
+    }}
+  ></div>
+))}
+
     </div>
   );
 
