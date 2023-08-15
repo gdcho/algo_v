@@ -5,6 +5,7 @@ import { generateRandomArray, DEFAULT_ARRAY_LENGTH, DEFAULT_MIN_VALUE, DEFAULT_M
 import { useDispatch, useSelector } from 'react-redux';
 import { setArray } from '../app/redux/actions';
 import { RootState } from '../app/redux/reducers';
+import Image from "next/image";
 
 const Home: React.FC = () => {
   const [arrayLength, setArrayLength] = useState<number>(DEFAULT_ARRAY_LENGTH);
@@ -25,11 +26,10 @@ const Home: React.FC = () => {
   };
   
   return (
-    <div>
-      <h1>algo v</h1>
+    <div className="center-container">
+      <Image src="/images/algov.png" alt="algo v" width={130} height={130} />
       <SortingControls onElementCountChange={handleElementCountChange} />
       <ArrayVisualizer data={array} key={array.length} />
-      {/* Add other components as needed */}
     </div>
   );
 };

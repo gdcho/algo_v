@@ -58,8 +58,8 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ data }) => {
   function getColor(index: number): string {
     if (currentSwappers.includes(index)) return "red";
     if (currentBubble.includes(index)) return "yellow";
-    if (currentSorted.includes(index)) return "green";
-    return "blue";
+    if (currentSorted.includes(index)) return "#04aa6d";
+    return "#077edf";
   }
 };
 

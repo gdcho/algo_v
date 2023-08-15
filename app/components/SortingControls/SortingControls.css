@@ -1,0 +1,55 @@
+input[type="range"] {
+  margin-top: 20px;
+  height: 7px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 50%;
+  background: #04aa6d;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #077edf;
+  cursor: pointer;
+}
+
+select {
+  padding: 5px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #04aa6d;
+  color:#ffffff;
+  font-size: 12px;
+}
+
+button {
+  padding: 5px 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #04aa6d;
+  color: #ffffff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #037a4d;
+}
+
+button:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}

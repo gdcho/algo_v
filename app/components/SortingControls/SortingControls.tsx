@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { startSorting, resetArray, setAlgorithm } from '../../redux/actions';
+import './SortingControls.css';
 
 interface SortingControlsProps {
   onElementCountChange?: (count: number) => void; 
@@ -28,8 +29,8 @@ const SortingControls: React.FC<SortingControlsProps> = ({ onElementCountChange 
         <input 
           type="range" 
           min="10" 
-          max="300" 
-          defaultValue="100" 
+          max="150" 
+          defaultValue="80" 
           onChange={(e) => onElementCountChange && onElementCountChange(Number(e.target.value))} 
         />
       </div>
