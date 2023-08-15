@@ -9,7 +9,7 @@ import {
   SET_CURRENT_SORTED,
   SET_RUNNING,
   MOVE_ELEMENT,
-  MoveElementAction
+  MoveElementAction,
 } from "../redux/actions";
 
 const initialBubbleState: number[] = [];
@@ -41,7 +41,12 @@ type RunningAction = {
   payload: boolean;
 };
 
-type ActionTypes = BubbleAction | SwappersAction | SortedAction | RunningAction | MoveElementAction;
+type ActionTypes =
+  | BubbleAction
+  | SwappersAction
+  | SortedAction
+  | RunningAction
+  | MoveElementAction;
 
 export const currentBubbleReducer = (
   state = initialBubbleState,

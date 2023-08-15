@@ -29,9 +29,6 @@ function* handleStartSorting(): SagaIterator {
   const array = yield select((state) => state.array);
   const algorithm = yield select((state) => state.algorithm);
 
-  console.log("Selected algorithm:", algorithm);
-  console.log("Initial array:", array);
-
   let sortingGenerator;
   switch (algorithm) {
     case "bubbleSort":
@@ -93,9 +90,16 @@ function* handleStartSorting(): SagaIterator {
 
   yield put(setRunning(false));
 
-  console.log("Sorted array:", finalSortedArray);
 }
 
 export function* watchStartSorting(): SagaIterator {
   yield takeLatest(START_SORTING, handleStartSorting);
+}
+
+function* handleResetArray(): SagaIterator {
+  window.location.reload();
+}
+
+export function* watchResetArray(): SagaIterator {
+  yield takeLatest("RESET_ARRAY", handleResetArray);
 }

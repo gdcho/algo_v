@@ -28,7 +28,7 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ data }) => {
 
   useEffect(() => {
     setIndices(data.map((_, i) => i));
-}, [data]);
+  }, [data]);
 
   return (
     <div
@@ -41,17 +41,16 @@ const ArrayVisualizer: React.FC<ArrayVisualizerProps> = ({ data }) => {
       }}
     >
       {data.map((value, index) => (
-  <div
-    key={index}
-    style={{
-      height: `${(value / maxValue) * 100}%`,
-      width: "5px",
-      margin: "0 1px",
-      backgroundColor: getColor(index),
-    }}
-  ></div>
-))}
-
+        <div
+          key={index}
+          style={{
+            height: `${(value / maxValue) * 100}%`,
+            width: "5px",
+            margin: "0 1px",
+            backgroundColor: getColor(index),
+          }}
+        ></div>
+      ))}
     </div>
   );
 
